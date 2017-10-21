@@ -23,7 +23,7 @@ class PokemonController extends Controller
 
     public function search(Request $requests){
         if($requests->searchBy == "name"){
-            $results = Pokemon::where('name', 'like', '%'.$requests->txtSearch.'%')->paginate(24);
+            $results = Pokemon::where('name','like','%'.$requests->txtSearch.'%')->paginate(24);
         }else{
             $results = Pokemon::join('elements', 'pokemons.element_id','=', 'elements.id')
                 ->where('elements.name', 'like', '%'.$requests->txtSearch.'%')

@@ -8,14 +8,14 @@
 		<form method="POST" action="{{url('/login')}}">
 			{{csrf_field()}}
 			<div class="form-group">
-				<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="youremail@example.com" name="email">
+				<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$email}}" placeholder="youremail@example.com" name="email">
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="password" name="password">
 			</div>
 			<div class="form-check">
 				<label class="form-check-label">
-					<input type="checkbox" class="form-check-input">
+					<input type="checkbox" class="form-check-input" name="remember">
 					Remember me
 				</label>
 			</div>

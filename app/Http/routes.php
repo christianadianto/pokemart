@@ -16,12 +16,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/login', function () {
-    if(Auth::check()){
-        return view('home');
-    }
-    return view('login');
-});
+Route::get('/login', 'LoginController@index');
 
 Route::get('/register', function () {
     if(Auth::check()){
@@ -91,11 +86,7 @@ Route::get('/detail-transaction', function () {
 
 Route::get('/delete-transaction', 'TransactionController@index_delete');
 
-Route::get('/logout', function (){
-    Auth::logout();
-
-    return view('/home');
-});
+Route::get('/logout', 'LoginController@logout');
 
 Route::get('/checkUser', 'LoginController@checkUser');
 
@@ -109,7 +100,7 @@ Route::post('/register', 'Auth\AuthController@regis');
 
 Route::post('/login', 'LoginController@validateLogin');
 
-Route::post('/profile', 'UserController@updateProfile');
+Route::put('/profile', 'UserController@updateProfile');
 
 Route::post('/insert-element', 'ElementController@insert');
 

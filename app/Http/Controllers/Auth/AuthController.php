@@ -110,7 +110,7 @@ class AuthController extends Controller
             'gender' => $data['gender'],
             'date_of_birth' => $data['date_of_birth'],
             'address' => $data['address'],
-            'role' => 'admin',
+            'role' => 'member',
         ]);
     }
 }

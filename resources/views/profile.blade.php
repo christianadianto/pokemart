@@ -6,6 +6,7 @@
 		<h4>Profile</h4>
 		<img class="profile" width="120">
 		<form method="POST" action="{{ url('/profile') }}" enctype="multipart/form-data">
+			{{method_field('put')}}
 			{{csrf_field()}}
 			<div class="form-group mb-2">
 				<input type="file" class="form-control-file m-0-auto" id="profileImage" name="profile_picture">
@@ -44,7 +45,6 @@
                 var date_of_birth = response.user.date_of_birth;
                 var address = response.user.address;
 
-                console.log(email);
                 $('.profile').attr('src',"{{asset('')}}"+ img);
                 $('#email').val(email);
                 $("#"+gender).attr('checked', 'checked');

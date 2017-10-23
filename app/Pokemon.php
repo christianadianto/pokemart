@@ -12,4 +12,8 @@ class Pokemon extends Model
 
     protected $table = 'pokemons';
 
+    protected function element(){
+        return $this->hasOne('App\Element','id','element_id');
+    }
+
 }

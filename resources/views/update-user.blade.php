@@ -8,6 +8,7 @@
 		<img src="{{asset('').$user->profile_picture}}" class="profile" width="120">
 		<form method="post" action="/update-user" enctype="multipart/form-data">
 			{{csrf_field()}}
+			{{method_field('put')}}
 			<input type="hidden" name="id" value="{{$user->id}}">
 			<div class="form-group mb-2">
 				<input type="file" class="form-control-file m-0-auto" id="profileImage" name="profile_picture">

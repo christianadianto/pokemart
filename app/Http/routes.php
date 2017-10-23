@@ -34,19 +34,15 @@ Route::get('/profile', function () {
 
 Route::get('/pokemon', 'PokemonController@index');
 
-Route::get('/pokemon-search', 'PokemonController@search');
+//Route::get('/pokemon-search', 'PokemonController@search');
 
 Route::get('/pokemon-detail/{id}', 'PokemonController@index_detail_pokemon');
 
 Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon');
 
-Route::get('/update-pokemon', function () {
-    if(Auth::check()){
-        if(Auth::User()->role =='admin')
-            return view('update-pokemon');
-    }
-    return view('home');
-});
+Route::get('/update-pokemon','PokemonController@list_update');
+
+Route::get('/update-pokemon/{id}','PokemonController@index_detail_update_pokemon');
 
 Route::get('/insert-element', function () {
     if(Auth::check()){
@@ -96,6 +92,8 @@ Route::get('/update-element/{$id}', function () {
     return view('update-element');
 });
 
+Route::get('/delete-pokemon','PokemonController@list_delete');
+
 Route::post('/register', 'Auth\AuthController@regis');
 
 Route::post('/login', 'LoginController@validateLogin');
@@ -110,7 +108,7 @@ Route::post('/insert-pokemon', 'PokemonController@insert');
 
 Route::post('/insert-comment', 'CommentController@insert');
 
-Route::post('/update-user', 'UserController@updateUser');
+Route::put('/update-user', 'UserController@updateUser');
 
 Route::delete('/delete-user', 'UserController@deleteUser');
 
@@ -120,4 +118,8 @@ Route::delete('/delete-cart', 'CartController@delete');
 
 Route::put('/update-transaction', 'TransactionController@update_status');
 
+Route::put('/update-pokemon','PokemonController@update');
+
 Route::delete('/delete-transaction', 'TransactionController@delete');
+
+Route::delete('/delete-pokemon', 'PokemonController@delete');

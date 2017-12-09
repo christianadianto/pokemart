@@ -22,13 +22,10 @@ class PokemonController extends Controller
     }
 
     public function list_update(){
-        if(Auth::Check()){
-            if(Auth::user()->role == 'admin') {
-                $pokemons = Pokemon::paginate(24);
-                return view('list-update-pokemon')->with('pokemons', $pokemons);
-            }
-        }
-        return view('home');
+        $pokemons = Pokemon::paginate(24);
+
+        return view('list-update-pokemon')->with('pokemons', $pokemons);
+
     }
 
     public function search(Request $requests){
@@ -76,15 +73,10 @@ class PokemonController extends Controller
     }
 
     public function index_insert_pokemon () {
-        if(Auth::check()){
-            if(Auth::User()->role == 'admin'){
-                $elements = Element::all();
+        $elements = Element::all();
 
-                return view('insert-pokemon', [
-                    'elements'  => $elements]);
-            }
-            return view('home');
-        }
+        return view('insert-pokemon', [
+            'elements'  => $elements]);
     }
 
     protected function validator(array $data)

@@ -42,7 +42,6 @@ class LoginController extends Controller
             return response()->json(['check'=>true,'user'=>$user]);
         }
         return response()->json(['check'=>false]);
-
     }
 
 

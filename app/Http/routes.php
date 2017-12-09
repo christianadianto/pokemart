@@ -26,11 +26,8 @@ Route::get('/register', function () {
 });
 
 Route::get('/profile', function () {
-    if(Auth::User()->role == 'member'){
         return view('profile');
-    }
-    return view('home');
-});
+})->middleware('checkMember');
 
 Route::get('/pokemon', 'PokemonController@index');
 
@@ -38,11 +35,11 @@ Route::get('/pokemon', 'PokemonController@index');
 
 Route::get('/pokemon-detail/{id}', 'PokemonController@index_detail_pokemon');
 
-Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon');
+Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon')->middleware('checkAdmin');
 
-Route::get('/update-pokemon','PokemonController@list_update');
+Route::get('/update-pokemon','PokemonController@list_update')->middleware('checkAdmin');
 
-Route::get('/update-pokemon/{id}','PokemonController@index_detail_update_pokemon');
+Route::get('/update-pokemon/{id}','PokemonController@index_detail_update_pokemon')->middleware('checkAdmin');
 
 Route::get('/insert-element', function () {
     if(Auth::check()){
@@ -60,17 +57,15 @@ Route::get('/update-element', function () {
     return view('home');
 });
 
-Route::get('/search-user', 'UserController@index');
+Route::get('/search-user', 'UserController@index')->middleware('checkAdmin');
 
-Route::get('/update-user', 'UserController@getUpdateUser');
+Route::get('/update-user', 'UserController@getUpdateUser')->middleware('checkAdmin');
 
-Route::get('/delete-user', 'UserController@getDeleteUser');
+Route::get('/delete-user', 'UserController@getDeleteUser')->middleware('checkAdmin');
 
 Route::get('/cart', 'CartController@index');
 
-Route::post('/payment', 'TransactionController@insert');
-
-Route::get('/update-transaction', 'TransactionController@index_update');
+Route::get('/update-transaction', 'TransactionController@index_update')->middleware('checkAdmin');
 
 Route::get('/detail-transaction', function () {
     if(Auth::check()){
@@ -80,25 +75,25 @@ Route::get('/detail-transaction', function () {
     return view('home');
 });
 
-Route::get('/delete-transaction', 'TransactionController@index_delete');
+Route::get('/delete-transaction', 'TransactionController@index_delete')->middleware('checkAdmin');
 
 Route::get('/logout', 'LoginController@logout');
 
 Route::get('/checkUser', 'LoginController@checkUser');
 
-Route::get('/search-element', 'ElementController@index');
+Route::get('/search-element', 'ElementController@index')->middleware('checkAdmin');
 
 Route::get('/update-element/{$id}', function () {
     return view('update-element');
 });
 
-Route::get('/delete-pokemon','PokemonController@list_delete');
+Route::get('/delete-pokemon','PokemonController@list_delete')->middleware('checkAdmin');
 
 Route::post('/register', 'Auth\AuthController@regis');
 
 Route::post('/login', 'LoginController@validateLogin');
 
-Route::put('/profile', 'UserController@updateProfile');
+Route::post('/payment', 'TransactionController@insert');
 
 Route::post('/insert-element', 'ElementController@insert');
 
@@ -108,18 +103,20 @@ Route::post('/insert-pokemon', 'PokemonController@insert');
 
 Route::post('/insert-comment', 'CommentController@insert');
 
-Route::put('/update-user', 'UserController@updateUser');
-
-Route::delete('/delete-user', 'UserController@deleteUser');
-
 Route::post('/add-cart', 'CartController@add_cart');
 
-Route::delete('/delete-cart', 'CartController@delete');
+Route::put('/profile', 'UserController@updateProfile');
+
+Route::put('/update-user', 'UserController@updateUser');
 
 Route::put('/update-transaction', 'TransactionController@update_status');
 
 Route::put('/update-pokemon','PokemonController@update');
 
+Route::delete('/delete-cart', 'CartController@delete');
+
 Route::delete('/delete-transaction', 'TransactionController@delete');
 
 Route::delete('/delete-pokemon', 'PokemonController@delete');
+
+Route::delete('/delete-user', 'UserController@deleteUser');

@@ -8,5 +8,5 @@ use App\Http\Requests;
 
 class DetailTransactionController extends Controller
 {
-    //
+    //ga jadi dipake
 }

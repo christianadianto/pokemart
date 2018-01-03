@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
 {
+    //buat validasi yang diperlukan
     protected function validator(array $data)
     {
         $date = new Carbon();
-        $min_date = $date->subYears(10)->format('Y-m-d');
+        $min_date = $date->subYears(10)->format('Y-m-d'); //formatin tanggal supaya sesuai dengan soal
 
         $messages = array(
             'date_of_birth.before' => 'you must be older than 10 to register!',
@@ -96,8 +97,10 @@ class UserController extends Controller
         $user->gender = $request->gender;
         $user->address = $request->address;
 
+        //dapeting nama image
         $imageName = $request->file('profile_picture')->getClientOriginalName();
 
+        //pindahin picture ke dalam folder asset
         $request->file('profile_picture')->move(
             base_path() . '/public/assets/profiles/', $imageName
         );

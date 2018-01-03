@@ -16,6 +16,10 @@ class ElementController extends Controller
             'elements'  => $elements]);
     }
 
+    public function index_update($id){
+        return view('update-element')->with(['id'=>$id]);
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -28,8 +32,7 @@ class ElementController extends Controller
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            $err= $validator->getMessageBag()->first();
-            return response()->json(['err'=>$err]);
+            return redirect()->back()->withErrors($validator);
         }
 
         $this->create($request->all());
@@ -44,14 +47,29 @@ class ElementController extends Controller
         ]);
     }
 
-    protected function update (Request $request, $id) {
-        $element = Element::find($id);
+    protected function update (Request $request) {
+        $validator = $this->validator($request->all());
 
-        $element->name = $request->element-name;
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $element = Element::find($request->id);
+
+        $element->name = $request["element-name"];
 
         $element->save();
 
         return redirect('/search-element');
-
     }
+
+    public function redirect_to_update(Request $request){
+        if($request->id != 0){
+            return redirect()->route('search-element',['id'=>$request->id]);
+        }
+
+        return redirect()->back()->withErrors(['err' => 'Element name must be selected']);
+    }
+
+
 }

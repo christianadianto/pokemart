@@ -24,8 +24,7 @@ class CommentController extends Controller
         $validator = $this->validator($request->all());
 
             if ($validator->fails()) {
-                $err= $validator->getMessageBag()->first();
-                return response()->json(['err'=>$err]);
+                return redirect()->back()->withErrors($validator);
         }
 
         $id = $request->id;

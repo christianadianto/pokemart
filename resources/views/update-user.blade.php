@@ -34,6 +34,9 @@
 			</div>
 			<button type="submit" class="btn btn-primary mb-4">Edit</button>
 		</form>
+		@if($errors->any())
+			{{$errors->first()}}
+		@endif
 	</div>
 </div>
 <script>

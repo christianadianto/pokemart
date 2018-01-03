@@ -29,13 +29,18 @@ class PokemonController extends Controller
     }
 
     public function search(Request $requests){
+//        dd($requests);
         if($requests->searchBy == "name"){
             $results = Pokemon::where('name','like','%'.$requests->txtSearch.'%')->paginate(24);
-        }else{
+        }
+        else if($requests->searchBy == "element"){
             $results = Pokemon::join('elements', 'pokemons.element_id','=', 'elements.id')
                 ->where('elements.name', 'like', '%'.$requests->txtSearch.'%')
                 ->select('pokemons.*')
                 ->paginate(24);
+        }
+        else{
+            $results = Pokemon::paginate(24);
         }
         return view('pokemon')->with('pokemons', $results);
     }
@@ -96,8 +101,7 @@ class PokemonController extends Controller
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            $err= $validator->getMessageBag()->first();
-            return response()->json(['err'=>$err]);
+            return redirect()->back()->withErrors($validator);
         }
         $imageName = $request->file('image')->getClientOriginalName();
 
@@ -143,19 +147,19 @@ class PokemonController extends Controller
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            $err= $validator->getMessageBag()->first();
-            return response()->json(['err'=>$err]);
+            return redirect()->back()->withErrors($validator);
         }
         $imageName = $request->file('image')->getClientOriginalName();
 
         $request->file('image')->move(
-            base_path() . 'public/assets/pokemon_list/', $imageName
+            base_path() . '/public/assets/pokemon_list/', $imageName
         );
 
 
         $pokemon = Pokemon::find($request->id);
-        $pokemon->name = $request['pokemon-name'];
+        $pokemon->name = $request->name;
         $pokemon->element_id = $request->element_id;
+        $pokemon->image = $imageName;
         $pokemon->gender = $request->gender;
         $pokemon->description = $request->description;
         $pokemon->price = $request->price;

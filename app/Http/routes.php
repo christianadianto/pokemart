@@ -13,42 +13,37 @@
 use Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware'=> 'checkAdmin'], function (){
-    Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon');
+    Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon'); //7. insert pokemon
 
-    Route::get('/update-pokemon','PokemonController@list_update');
+    Route::get('/update-pokemon','PokemonController@list_update'); //list semua pokemon, 8. update pokemon
 
-    Route::get('/update-pokemon/{id}','PokemonController@index_detail_update_pokemon');
+    Route::get('/update-pokemon/{id}','PokemonController@index_detail_update_pokemon'); //8. update pokemon
 
     Route::get('/insert-element', function () {
         return view('insert-element');
-    });
+    }); //10. insert element
 
-    Route::get('/update-element', function () {
-        return view('update-element');
-    });
+    Route::get('/search-user', 'UserController@index'); //12.update user
 
-    Route::get('/search-user', 'UserController@index');
+    Route::get('/update-user', 'UserController@getUpdateUser'); //Update User Detail Page.
 
-    Route::get('/update-user', 'UserController@getUpdateUser');
+    Route::get('/delete-user', 'UserController@getDeleteUser'); //13. delete user
 
-    Route::get('/delete-user', 'UserController@getDeleteUser');
-
-    Route::get('/update-transaction', 'TransactionController@index_update');
+    Route::get('/update-transaction', 'TransactionController@index_update'); //14. update transasction
 
     Route::get('/detail-transaction', function () {
         return view('detail-transaction');
-    });
+    }); //liat detail dari update transaction
 
-    Route::get('/delete-transaction', 'TransactionController@index_delete');
+    Route::get('/delete-transaction', 'TransactionController@index_delete'); //15. delete transaction
 
-    Route::get('/search-element', 'ElementController@index');
+    Route::get('/search-element', 'ElementController@index'); //search element untuk update
 
-    Route::get('/delete-pokemon','PokemonController@list_delete');
+    Route::get('/delete-pokemon','PokemonController@list_delete'); //9. delete pokemon
 
-    Route::get('/update-element/{$id}', function () {
-        return view('update-element');
-    });
+    Route::post('/search-element', 'ElementController@redirect_to_update'); //redirect doang buat dpt id
 
+    Route::get('/update-element/{id}', 'ElementController@index_update')->name('search-element'); //11. update element
 });
 
 Route::group(['middleware'=> 'checkMember'], function (){
@@ -74,7 +69,7 @@ Route::get('/register', function () {
 
 Route::get('/pokemon', 'PokemonController@index');
 
-//Route::get('/pokemon-search', 'PokemonController@search');
+Route::get('/pokemon-search', 'PokemonController@search');
 
 Route::get('/pokemon-detail/{id}', 'PokemonController@index_detail_pokemon');
 
@@ -90,11 +85,11 @@ Route::post('/payment', 'TransactionController@insert');
 
 Route::post('/insert-element', 'ElementController@insert');
 
-Route::post('/update-element', 'ElementController@update');
-
 Route::post('/insert-pokemon', 'PokemonController@insert');
 
 Route::post('/insert-comment', 'CommentController@insert');
+
+Route::put('/update-element', 'ElementController@update');
 
 Route::post('/add-cart', 'CartController@add_cart');
 

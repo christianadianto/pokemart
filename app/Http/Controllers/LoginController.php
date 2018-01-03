@@ -55,13 +55,12 @@ class LoginController extends Controller
 //            $this->throwValidationException(
 //                $request, $validator
 //            );
-            $err= $validator->getMessageBag()->first();
-            return response()->json(['err'=>$err]);
+            return redirect()->back()->withErrors($validator);
         }
 
         if(!$user) {
             $err = 'user not found';
-            return response()->json(['err' => $err]);
+            return redirect()->back()->withErrors(['err' => $err]);
         }
 
         if (Auth::attempt(['email' => $user->email, 'password' => $request->password]))
@@ -71,7 +70,7 @@ class LoginController extends Controller
             return redirect('/');
         }
         $err = 'Wrong username/password combination';
-        return response()->json(['err' => $err]);
+        return redirect()->back()->withErrors(['err' => $err]);
 
     }
 

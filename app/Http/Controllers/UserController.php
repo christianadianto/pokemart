@@ -60,10 +60,9 @@ class UserController extends Controller
 
     public function updateUser(Request $request){
         $validator = $this->validator($request->all());
-        $request->user;
+
         if ($validator->fails()) {
-            $err= $validator->getMessageBag()->first();
-            return response()->json(['err'=>$err]);
+            return redirect()->back()->withErrors($validator);
         }
 
         $user = User::where('id',$request->id)->first();
@@ -86,6 +85,12 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request){
+
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
         $user = Auth::User();
         $user->email = $request->email;
         $user->gender = $request->gender;

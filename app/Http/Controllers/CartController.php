@@ -22,8 +22,7 @@ class CartController extends Controller
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            $err= $validator->getMessageBag()->first();
-            return response()->json(['err'=>$err]);
+            return redirect()->back()->withErrors($validator);
         }
 
         $this->create($request->all());
@@ -32,21 +31,25 @@ class CartController extends Controller
     }
 
     public function index () {
-        if(Auth::User()->role =='member'){
-            $carts = Cart::all();
-            $total_qty = 0;
-            $total_price = 0;
-            foreach ($carts as $cart){
-                $total_qty += $cart->qty;
-                $total_price = $total_price + ($cart->qty * $cart ->pokemon_price);
-            }
+        $user_id = Auth::id();
 
-            $carts = Cart::join('pokemons', 'pokemons.id', '=', 'carts.pokemon_id')->select('carts.*', 'pokemons.image', 'pokemons.name')->get();
+        $carts = Cart::where('user_id','like',$user_id)->get();
 
-            return view('cart', [
-                'carts'  => $carts, 'total_qty' => $total_qty, 'total_price' =>$total_price]);
+        $total_qty = 0;
+        $total_price = 0;
+        foreach ($carts as $cart){
+            $total_qty += $cart->qty;
+            $total_price = $total_price + ($cart->qty * $cart ->pokemon_price);
         }
-        return view('home');
+
+        $carts = Cart::join('pokemons', 'pokemons.id', '=', 'carts.pokemon_id')
+            ->join('users', 'users.id', '=', 'carts.user_id')
+            ->select('carts.*', 'pokemons.image', 'pokemons.name')
+            ->where('user_id','like',$user_id)->get();
+
+
+        return view('cart', [
+            'carts'  => $carts, 'total_qty' => $total_qty, 'total_price' =>$total_price]);
 
     }
 
@@ -54,6 +57,7 @@ class CartController extends Controller
     {
         return Cart::create([
             'pokemon_id' => $data['id'],
+            'user_id' => Auth::id(),
             'qty' => $data['qty'],
             'pokemon_price' => $data['price']
         ]);

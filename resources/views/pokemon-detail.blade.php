@@ -73,5 +73,8 @@
 			<button type="submit" class="btn btn-primary mb-2 wp-150 text-danger">Insert Comment</button>
 		</form>
 	</div>
+	@if($errors->any())
+		{{$errors->first()}}
+	@endif
 </div>
 @stop

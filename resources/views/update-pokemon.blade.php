@@ -15,13 +15,12 @@
 			<div class="form-group mb-2">
 				<input type="pokemon-name" class="form-control" id="pokemon-name" placeholder="Your pokemon name" value="{{$pokemons->name}}" name="name">
 			</div>
-			<select class="form-control wp-150 mb-3">
-				<option selected>{{$pokemons->element->name}}</option>
+			<select class="form-control wp-150 mb-3" name="element_id">
 				@foreach($elements as $element)
-					@if($element->name == $pokemons->element->name)
-
+					@if($element->name != $pokemons->element->name)
+						<option value="{{$element->id}}">{{$element->name}}</option>
 					@else
-					<option value="{{$element->id}}">{{$element->name}}</option>
+						<option value="{{$element->id}}" selected>{{$element->name}}</option>
 					@endif
 				@endforeach
 			</select>
@@ -44,6 +43,9 @@
 			</div>
 			<button type="submit" class="btn btn-primary mb-4">Edit</button>
 		</form>
+		@if($errors->any())
+			{{$errors->first()}}
+		@endif
 	</div>
 </div>
 @stop

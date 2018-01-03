@@ -78,8 +78,9 @@ class AuthController extends Controller
 //            $this->throwValidationException(
 //                $request, $validator
 //            );
-            $err= $validator->getMessageBag()->first();
-            return response()->json(['err'=>$err]);
+//            $err= $validator->getMessageBag()->first();
+//            return response()->json(['err'=>$err]);
+            return redirect()->back()->withErrors($validator);
         }
 
         //Auth::guard($this->getGuard())->login($this->create($request->all()));

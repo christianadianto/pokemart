@@ -12,10 +12,11 @@
 */
 use Illuminate\Support\Facades\Auth;
 
+//yang bisa akses cuma admin
 Route::group(['middleware'=> 'checkAdmin'], function (){
-    Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon'); //7. insert pokemon
+    Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon'); //7. buat insert pokemon
 
-    Route::get('/update-pokemon','PokemonController@list_update'); //list semua pokemon, 8. update pokemon
+    Route::get('/update-pokemon','PokemonController@list_update'); //list semua pokemon trus dipilih buat update pokemon
 
     Route::get('/update-pokemon/{id}','PokemonController@index_detail_update_pokemon'); //8. update pokemon
 
@@ -46,6 +47,7 @@ Route::group(['middleware'=> 'checkAdmin'], function (){
     Route::get('/update-element/{id}', 'ElementController@index_update')->name('search-element'); //11. update element
 });
 
+//yang bisa akses cuma member
 Route::group(['middleware'=> 'checkMember'], function (){
     Route::get('/profile', function () {
         return view('profile');

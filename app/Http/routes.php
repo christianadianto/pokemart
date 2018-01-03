@@ -12,6 +12,53 @@
 */
 use Illuminate\Support\Facades\Auth;
 
+Route::group(['middleware'=> 'checkAdmin'], function (){
+    Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon');
+
+    Route::get('/update-pokemon','PokemonController@list_update');
+
+    Route::get('/update-pokemon/{id}','PokemonController@index_detail_update_pokemon');
+
+    Route::get('/insert-element', function () {
+        return view('insert-element');
+    });
+
+    Route::get('/update-element', function () {
+        return view('update-element');
+    });
+
+    Route::get('/search-user', 'UserController@index');
+
+    Route::get('/update-user', 'UserController@getUpdateUser');
+
+    Route::get('/delete-user', 'UserController@getDeleteUser');
+
+    Route::get('/update-transaction', 'TransactionController@index_update');
+
+    Route::get('/detail-transaction', function () {
+        return view('detail-transaction');
+    });
+
+    Route::get('/delete-transaction', 'TransactionController@index_delete');
+
+    Route::get('/search-element', 'ElementController@index');
+
+    Route::get('/delete-pokemon','PokemonController@list_delete');
+
+    Route::get('/update-element/{$id}', function () {
+        return view('update-element');
+    });
+
+});
+
+Route::group(['middleware'=> 'checkMember'], function (){
+    Route::get('/profile', function () {
+        return view('profile');
+    });
+
+    Route::get('/cart', 'CartController@index');
+});
+
 Route::get('/', function () {
     return view('home');
 });
@@ -25,69 +72,15 @@ Route::get('/register', function () {
     return view('register');
 });
 
-Route::get('/profile', function () {
-        return view('profile');
-})->middleware('checkMember');
-
 Route::get('/pokemon', 'PokemonController@index');
 
 //Route::get('/pokemon-search', 'PokemonController@search');
 
 Route::get('/pokemon-detail/{id}', 'PokemonController@index_detail_pokemon');
 
-Route::get('/insert-pokemon', 'PokemonController@index_insert_pokemon')->middleware('checkAdmin');
-
-Route::get('/update-pokemon','PokemonController@list_update')->middleware('checkAdmin');
-
-Route::get('/update-pokemon/{id}','PokemonController@index_detail_update_pokemon')->middleware('checkAdmin');
-
-Route::get('/insert-element', function () {
-    if(Auth::check()){
-        if(Auth::User()->role =='admin')
-            return view('insert-element');
-    }
-    return view('home');
-});
-
-Route::get('/update-element', function () {
-    if(Auth::check()){
-        if(Auth::User()->role =='admin')
-            return view('update-element');
-    }
-    return view('home');
-});
-
-Route::get('/search-user', 'UserController@index')->middleware('checkAdmin');
-
-Route::get('/update-user', 'UserController@getUpdateUser')->middleware('checkAdmin');
-
-Route::get('/delete-user', 'UserController@getDeleteUser')->middleware('checkAdmin');
-
-Route::get('/cart', 'CartController@index');
-
-Route::get('/update-transaction', 'TransactionController@index_update')->middleware('checkAdmin');
-
-Route::get('/detail-transaction', function () {
-    if(Auth::check()){
-        if(Auth::User()->role =='admin')
-            return view('detail-transaction');
-    }
-    return view('home');
-});
-
-Route::get('/delete-transaction', 'TransactionController@index_delete')->middleware('checkAdmin');
-
 Route::get('/logout', 'LoginController@logout');
 
 Route::get('/checkUser', 'LoginController@checkUser');
-
-Route::get('/search-element', 'ElementController@index')->middleware('checkAdmin');
-
-Route::get('/update-element/{$id}', function () {
-    return view('update-element');
-});
-
-Route::get('/delete-pokemon','PokemonController@list_delete')->middleware('checkAdmin');
 
 Route::post('/register', 'Auth\AuthController@regis');
 

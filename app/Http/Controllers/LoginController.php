@@ -41,7 +41,7 @@ class LoginController extends Controller
             $user = Auth::user();
             return response()->json(['check'=>true,'user'=>$user]);
         }
-        return response()->json(['check'=>false]);
+        return response()->json(['check'=>false,]);
     }
 
 

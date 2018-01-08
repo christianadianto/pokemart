@@ -3273,15 +3273,15 @@ tbody.collapse.show {
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #292b2c;
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: #343a40;
   -webkit-background-clip: padding-box;
           background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
+  /*border-radius: 0.25rem;*/
 }
 
 .dropdown-divider {
@@ -3297,7 +3297,7 @@ tbody.collapse.show {
   padding: 3px 1.5rem;
   clear: both;
   font-weight: normal;
-  color: #292b2c;
+  color: #fff;
   text-align: inherit;
   white-space: nowrap;
   background: none;

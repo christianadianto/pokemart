@@ -5,3 +5,7 @@
 .nav-item-user{
     display: none;
 }
+
+.nav-item-admin{
+    display: none;
+}

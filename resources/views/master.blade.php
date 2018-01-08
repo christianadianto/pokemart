@@ -33,9 +33,6 @@
                     <a class="nav-link" href="/register">Register</a>
                 </li>
                 <li class="nav-item-user">
-                    <span class="username"></span>
-                </li>
-                <li class="nav-item-user">
                     <a class="nav-link" href="/profile">Profile</a>
                 </li>
                 <li class="nav-item-user">
@@ -44,7 +41,48 @@
                 <li class="nav-item-user">
                     <a class="nav-link" href="/cart">Your Cart</a>
                 </li>
-                <li class="nav-item-user">
+                <li class="nav-item dropdown nav-item-admin">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Pokemon
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/insert-pokemon">Insert Pokemon</a>
+                        <a class="dropdown-item" href="/update-pokemon">Update Pokemon</a>
+                        <a class="dropdown-item" href="/delete-pokemon">Delete Pokemon</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown nav-item-admin">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Element
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/insert-element">Insert Element</a>
+                        <a class="dropdown-item" href="/search-element">Update Element</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown nav-item-admin">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        User
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/search-user">Update User</a>
+                        <a class="dropdown-item" href="/delete-user">Delete User</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown nav-item-admin">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Transaction
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/update-transaction">Update Transaction</a>
+                        <a class="dropdown-item" href="/delete-transaction">Delete Transaction</a>
+                    </div>
+                </li>
+
+                <li class="nav-item-log">
+                    <span class="username"></span>
+                </li>
+                <li class="nav-item-log">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
@@ -79,12 +117,21 @@
             request.done(function(response) {
                if(response.check){
                    $('.nav-item').hide();
-                   $('.nav-item-user').show();
+                   $('.nav-item-log').show();
                    $('.username').text(response.user.email);
+                   if(response.user.role == "member"){
+                       $('.nav-item-user').show();
+                   }
+                   else{
+                       $('.nav-item-admin').show();
+                   }
+
                }
                else{
                    $('.nav-item').show();
                    $('.nav-item-user').hide();
+                   $('.nav-item-admin').hide();
+                   $('.nav-item-log').hide();
                }
             });
         });
